@@ -72,20 +72,20 @@ Each service folder contains:
 | MongoDB | `localhost:27017` | `admin` / `Abcd@1234` |
 | Redis | `localhost:6379` | Password: `Abcd@1234` |
 | SQL Server | `localhost,1433` | `sa` / `Abcd@1234` |
-| ClickHouse HTTP | `http://localhost:8123` | `admin` / `Abcd@1234` |
-| ClickHouse Play UI | `http://localhost:8123/play` | `admin` / `Abcd@1234` |
-| ClickHouse Dashboard | `http://localhost:8123/dashboard` | `admin` / `Abcd@1234` |
-| ClickHouse Health Check | `http://localhost:8123/ping` | Not required |
+| ClickHouse HTTP | [http://localhost:8123](http://localhost:8123) | `admin` / `Abcd@1234` |
+| ClickHouse Play UI | [http://localhost:8123/play](http://localhost:8123/play) | `admin` / `Abcd@1234` |
+| ClickHouse Dashboard | [http://localhost:8123/dashboard](http://localhost:8123/dashboard) | `admin` / `Abcd@1234` |
+| ClickHouse Health Check | [http://localhost:8123/ping](http://localhost:8123/ping) | Not required |
 | ClickHouse Native TCP | `localhost:9000` | `admin` / `Abcd@1234` |
-| AKHQ | `http://localhost:8080` | Not required |
-| Vault | `http://localhost:8200` | Token: `local-root-token` |
-| Elasticsearch | `http://localhost:9200` | Not required |
-| Kibana | `http://localhost:5601` | Not required |
-| Kibana Elasticsearch | `http://localhost:5601/app/elasticsearch/getting_started` | Not required |
-| Kibana APM | `http://localhost:5601/app/apm` | Not required |
-| APM Server | `http://localhost:8201` | Token not required |
-| Prometheus | `http://localhost:9090` | Not required |
-| Grafana | `http://localhost:3000` | `admin` / `Abcd@1234` |
+| AKHQ | [http://localhost:8080](http://localhost:8080) | Not required |
+| Vault | [http://localhost:8200](http://localhost:8200) | Token: `local-root-token` |
+| Elasticsearch | [http://localhost:9200](http://localhost:9200) | Not required |
+| Kibana | [http://localhost:5601](http://localhost:5601) | Not required |
+| Kibana Elasticsearch | [http://localhost:5601/app/elasticsearch/getting_started](http://localhost:5601/app/elasticsearch/getting_started) | Not required |
+| Kibana APM | [http://localhost:5601/app/apm](http://localhost:5601/app/apm) | Not required |
+| APM Server | [http://localhost:8201](http://localhost:8201) | Token not required |
+| Prometheus | [http://localhost:9090](http://localhost:9090) | Not required |
+| Grafana | [http://localhost:3000](http://localhost:3000) | `admin` / `Abcd@1234` |
 
 ## ⚙️ Configuration
 
@@ -156,10 +156,10 @@ Useful for .NET projects, reporting tools, integration tests, and local database
 | Item | Value |
 | --- | --- |
 | Image | `clickhouse/clickhouse-server:25.3` |
-| HTTP endpoint | `http://localhost:8123` |
-| Play UI | `http://localhost:8123/play` |
-| Dashboard | `http://localhost:8123/dashboard` |
-| Health check | `http://localhost:8123/ping` |
+| HTTP endpoint | [http://localhost:8123](http://localhost:8123) |
+| Play UI | [http://localhost:8123/play](http://localhost:8123/play) |
+| Dashboard | [http://localhost:8123/dashboard](http://localhost:8123/dashboard) |
+| Health check | [http://localhost:8123/ping](http://localhost:8123/ping) |
 | Native TCP endpoint | `localhost:9000` |
 | Database | `default` |
 | Username | `admin` |
@@ -177,7 +177,7 @@ Helpful for analytics, event data, logs, dashboards, and high-speed local querie
 | AKHQ image | `tchiotludo/akhq:0.24.0` |
 | Kafka bootstrap server | `localhost:9092` |
 | ZooKeeper port | `2181` |
-| AKHQ UI | `http://localhost:8080` |
+| AKHQ UI | [http://localhost:8080](http://localhost:8080) |
 | AKHQ login | Not required |
 | Auto topic creation | Enabled |
 | Default partitions | `3` |
@@ -192,7 +192,7 @@ Includes AKHQ so you can inspect topics, messages, consumers, and Kafka state fr
 | --- | --- |
 | Image | `hashicorp/vault:1.19` |
 | Mode | Dev mode |
-| UI | `http://localhost:8200` |
+| UI | [http://localhost:8200](http://localhost:8200) |
 | Login token | `local-root-token` |
 | Purpose | Local development only |
 
@@ -205,11 +205,11 @@ Includes AKHQ so you can inspect topics, messages, consumers, and Kafka state fr
 | Elasticsearch image | `elasticsearch:9.4.1` |
 | Kibana image | `kibana:9.4.1` |
 | APM Server image | `elastic/apm-server:9.4.1` |
-| Elasticsearch endpoint | `http://localhost:9200` |
-| Kibana UI | `http://localhost:5601` |
-| Kibana Elasticsearch page | `http://localhost:5601/app/elasticsearch/getting_started` |
-| APM endpoint | `http://localhost:8201` |
-| Kibana APM page | `http://localhost:5601/app/apm` |
+| Elasticsearch endpoint | [http://localhost:9200](http://localhost:9200) |
+| Kibana UI | [http://localhost:5601](http://localhost:5601) |
+| Kibana Elasticsearch page | [http://localhost:5601/app/elasticsearch/getting_started](http://localhost:5601/app/elasticsearch/getting_started) |
+| APM endpoint | [http://localhost:8201](http://localhost:8201) |
+| Kibana APM page | [http://localhost:5601/app/apm](http://localhost:5601/app/apm) |
 | Kibana menu path | `Observability` -> `APM and User Experience` |
 | Dashboard | Kibana |
 | Login | Not required |
@@ -225,7 +225,7 @@ Good for logs/search experiments and application performance monitoring. Kibana 
 | Item | Value |
 | --- | --- |
 | Image | `quay.io/prometheus/prometheus:v3.11.3` |
-| UI | `http://localhost:9090` |
+| UI | [http://localhost:9090](http://localhost:9090) |
 | Dashboard | Built-in Prometheus UI for queries, targets, alerts, and simple graphs |
 | Login | Not required |
 | Volume | `prometheus-data` |
@@ -237,9 +237,9 @@ Prometheus collects and stores metrics. Its built-in UI is useful for PromQL and
 | Item | Value |
 | --- | --- |
 | Image | `grafana/grafana-enterprise:13.0.1-security-01` |
-| UI | `http://localhost:3000` |
+| UI | [http://localhost:3000](http://localhost:3000) |
 | Dashboard | Grafana |
-| Default datasource | Prometheus at `http://host.docker.internal:9090` |
+| Default datasource | Prometheus at [http://host.docker.internal:9090](http://host.docker.internal:9090) |
 | Username | `admin` |
 | Password | `Abcd@1234` |
 | Volume | `grafana-data` |
