@@ -1,0 +1,20 @@
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Local overrides
+*.local.yml
+docker-compose.override.yml
+
+# Local data folders, if someone changes compose files to bind mounts
+DockerData/
+data/
+logs/
+volumes/

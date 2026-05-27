@@ -1,0 +1,98 @@
+MongoDB Run Guide
+
+1. Start Docker Desktop.
+
+2. Open PowerShell or CMD in the cloned repository root, then enter this service folder:
+
+cd ".\Mongo\Stable MongoDB"
+
+3. Start MongoDB:
+
+docker compose up -d
+docker compose ps
+
+If your Docker installation uses the legacy Compose command, use:
+
+docker-compose up -d
+docker-compose ps
+
+Default settings are already included in `.env`, so a fresh clone can run without creating extra files.
+
+Optional:
+If port 27017 is already in use, edit `MONGO_PORT` in `.env` or set another host port before startup:
+
+PowerShell:
+
+$env:MONGO_PORT=27018
+docker compose up -d
+
+CMD:
+
+set MONGO_PORT=27018
+docker compose up -d
+
+The same values are also shown in `.env.example` for reference.
+
+4. Connection details:
+
+Default values:
+
+Host:
+localhost
+
+Port:
+27017, or the value of `MONGO_PORT` if you changed it
+
+Username:
+admin
+
+Password:
+Abcd@1234
+
+Authentication Database:
+admin
+
+Default Database:
+appdb
+
+Connection String:
+mongodb://admin:Abcd%401234@localhost:27017/appdb?authSource=admin
+
+If you changed `.env` values, use your updated username, password, database, and port in the connection string.
+
+5. Quick test:
+
+docker compose exec -T mongodb mongosh --username admin --password "Abcd@1234" --authenticationDatabase admin --eval "db.adminCommand({ ping: 1 })"
+
+6. Open the MongoDB shell:
+
+docker compose exec mongodb mongosh --username admin --password "Abcd@1234" --authenticationDatabase admin
+
+7. Stop without deleting data:
+
+docker compose down
+
+Or, with legacy Compose:
+
+docker-compose down
+
+MongoDB data is stored in Docker named volumes:
+
+mongodb-data
+mongodb-config
+
+These volumes are created automatically by Docker. You do not need to create any data folder manually.
+
+These volumes are managed by Docker Desktop and are not tied to the cloned repository path. Restarting Docker Desktop, restarting Windows, or running `docker compose down` will not delete the data.
+
+A Docker Desktop factory reset, `docker compose down -v`, or `docker volume prune` can delete Docker volumes. Back up the volume first if you need the data to survive those operations.
+
+Do not run the commands below unless you intentionally want to delete MongoDB data.
+
+8. Fully reset MongoDB and delete its data:
+
+docker compose down -v --remove-orphans
+
+Or, with legacy Compose:
+
+docker-compose down -v --remove-orphans

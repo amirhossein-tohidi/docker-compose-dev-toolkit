@@ -1,0 +1,62 @@
+HashiCorp Vault Run Guide
+
+This setup is for local development only, not production.
+Vault runs in dev mode with a fixed token.
+
+Root Token:
+local-root-token
+
+1. Start Docker Desktop.
+
+2. Open PowerShell or CMD in the cloned repository root, then enter this service folder:
+
+cd ".\hashicorpVault\Local Vault"
+
+3. Start Vault:
+
+docker compose up -d
+docker compose ps
+
+If your Docker installation uses the legacy Compose command, use:
+
+docker-compose up -d
+docker-compose ps
+
+Default settings are already included in `.env`, so a fresh clone can run without creating extra files.
+
+Optional:
+If port 8200 is already in use, edit `VAULT_PORT` in `.env`.
+
+4. Vault UI:
+
+http://localhost:8200, or the value of `VAULT_PORT` if you changed it
+
+Login token:
+local-root-token
+
+5. Check Vault status:
+
+docker compose exec -T vault vault status
+
+6. Write and read a test secret:
+
+docker compose exec -T vault vault kv put -mount=secret hello value=world
+docker compose exec -T vault vault kv get -mount=secret hello
+
+If you have the Vault CLI installed on the host machine:
+
+set VAULT_ADDR=http://localhost:8200
+set VAULT_TOKEN=local-root-token
+vault status
+
+7. Stop Vault:
+
+docker compose down
+
+Or, with legacy Compose:
+
+docker-compose down
+
+Important:
+In dev mode, Vault data is not reliable after the container is deleted or recreated.
+For production, configure Vault with real storage, initialization, unseal, and proper policies.

@@ -1,0 +1,61 @@
+Kafka + ZooKeeper + AKHQ Run Guide
+
+1. Start Docker Desktop.
+
+2. Open PowerShell or CMD in the cloned repository root, then enter this service folder:
+
+cd ".\Kafka\Stable Kafka Zookeeper AKHQ"
+
+3. Start Kafka, ZooKeeper, and AKHQ:
+
+docker compose up -d
+docker compose ps
+
+If your Docker installation uses the legacy Compose command, use:
+
+docker-compose up -d
+docker-compose ps
+
+Default settings are already included in `.env`, so a fresh clone can run without creating extra files.
+
+Optional:
+If ports 2181, 9092, or 8080 are already in use, edit `ZOOKEEPER_PORT`, `KAFKA_HOST_PORT`, or `AKHQ_PORT` in `.env`.
+
+4. After startup, open AKHQ here:
+
+http://localhost:8080, or the value of `AKHQ_PORT` if you changed it
+
+5. Kafka address for applications running on the host machine:
+
+localhost:9092, or the value of `KAFKA_HOST_PORT` if you changed it
+
+6. Quick Kafka test:
+
+docker compose exec -T kafka kafka-topics --bootstrap-server localhost:9092 --create --if-not-exists --topic test-topic --partitions 1 --replication-factor 1
+docker compose exec -T kafka kafka-topics --bootstrap-server localhost:9092 --list
+
+7. Stop without deleting data:
+
+docker compose down
+
+Or, with legacy Compose:
+
+docker-compose down
+
+Kafka and ZooKeeper data is stored in Docker named volumes:
+
+kafka-data
+zookeeper-data
+zookeeper-log
+
+These volumes are created automatically by Docker. You do not need to create any data folder manually.
+
+Restarting Docker Desktop, restarting Windows, or running `docker compose down` will not delete the data.
+
+8. Fully reset Kafka and ZooKeeper data:
+
+docker compose down -v --remove-orphans
+
+Or, with legacy Compose:
+
+docker-compose down -v --remove-orphans

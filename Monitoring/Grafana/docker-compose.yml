@@ -1,0 +1,21 @@
+name: grafana-stack
+
+services:
+  grafana:
+    image: grafana/grafana-enterprise:${GRAFANA_VERSION:-13.0.1-security-01}
+    restart: unless-stopped
+    ports:
+      - "${GRAFANA_PORT:-3000}:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-Abcd@1234}
+      GF_METRICS_ENABLED: "true"
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GRAFANA_PROMETHEUS_URL: ${GRAFANA_PROMETHEUS_URL:-http://host.docker.internal:9090}
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+
+volumes:
+  grafana-data:
+    name: grafana-data

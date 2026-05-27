@@ -1,0 +1,59 @@
+Prometheus Run Guide
+
+Prometheus has its own simple UI for targets, PromQL queries, alerts, and basic graphs.
+For richer dashboards, use Grafana and connect it to this Prometheus instance.
+
+1. Start Docker Desktop.
+
+2. Open PowerShell or CMD in the cloned repository root, then enter this service folder:
+
+cd ".\Monitoring\Prometheus"
+
+3. Start Prometheus:
+
+docker compose up -d
+docker compose ps
+
+If your Docker installation uses the legacy Compose command, use:
+
+docker-compose up -d
+docker-compose ps
+
+Default settings are already included in `.env`, so a fresh clone can run without creating extra files.
+
+Optional:
+If port 9090 is already in use, edit `PROMETHEUS_PORT` in `.env`.
+
+4. Open Prometheus:
+
+http://localhost:9090, or the value of `PROMETHEUS_PORT` if you changed it
+
+5. Quick test:
+
+Open this URL in a browser:
+
+http://localhost:9090/-/ready
+
+6. Stop without deleting data:
+
+docker compose down
+
+Or, with legacy Compose:
+
+docker-compose down
+
+Prometheus data is stored in a Docker named volume:
+
+prometheus-data
+
+This volume is created automatically by Docker. You do not need to create any data folder manually.
+
+Restarting Docker Desktop, restarting Windows, or running `docker compose down` will not delete the data.
+
+7. Fully reset Prometheus and delete its data:
+
+docker compose down -v --remove-orphans
+
+Or, with legacy Compose:
+
+docker-compose down -v --remove-orphans

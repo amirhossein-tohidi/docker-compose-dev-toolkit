@@ -1,0 +1,71 @@
+name: elastic-observability
+
+services:
+  elasticsearch:
+    image: elasticsearch:${ELASTIC_VERSION:-9.4.1}
+    restart: unless-stopped
+    ports:
+      - "${ELASTICSEARCH_PORT:-9200}:9200"
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      xpack.security.enrollment.enabled: "false"
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:9200/_cluster/health >/dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+    networks:
+      - elastic-net
+
+  kibana:
+    image: kibana:${ELASTIC_VERSION:-9.4.1}
+    restart: unless-stopped
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    ports:
+      - "${KIBANA_PORT:-5601}:5601"
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+      SERVER_PUBLICBASEURL: http://localhost:${KIBANA_PORT:-5601}
+      XPACK_SECURITY_ENABLED: "false"
+    volumes:
+      - kibana-data:/usr/share/kibana/data
+    networks:
+      - elastic-net
+
+  apm-server:
+    image: elastic/apm-server:${ELASTIC_VERSION:-9.4.1}
+    restart: unless-stopped
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      kibana:
+        condition: service_started
+    ports:
+      - "${APM_SERVER_PORT:-8200}:8200"
+    command:
+      - -e
+      - -E
+      - apm-server.host=0.0.0.0:8200
+      - -E
+      - output.elasticsearch.hosts=["http://elasticsearch:9200"]
+      - -E
+      - setup.kibana.host=kibana:5601
+    networks:
+      - elastic-net
+
+networks:
+  elastic-net:
+    driver: bridge
+
+volumes:
+  elasticsearch-data:
+    name: elastic-observability-elasticsearch-data
+  kibana-data:
+    name: elastic-observability-kibana-data
